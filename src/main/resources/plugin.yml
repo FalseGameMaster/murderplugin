@@ -1,0 +1,9 @@
+name: murderplugin
+version: '0.1.0'
+main: dev.falsegamemaster.murderplugin.MurderPlugin
+api-version: '1.21'
+authors: [ FalseGameMaster ]
+description:
+  Provides a quick and easy way to place and configure custom doors in Minecraft. Note: This is primarily designed as a Paper plugin, and there are not currently plans to expand it beyond that scope.
+depend:
+  - propengine
