@@ -74,7 +74,7 @@ public class SWUtilityDoorProp extends Prop {
         @Override
         public void prepareInternal(ItemDisplay entity, PropSpawnRequest request) {
             entity.setItemStack(Util.getItemWithCustomModelData(Material.PINK_SHULKER_BOX, 7));
-            entity.setRotation(0, 0);
+//            entity.setRotation(0, 0);
             AdvancedLocation location = request.location();
             Transform propTransform = new Transform.Builder(location).pivot(new Vector3f(-0.5f, 1.0f, -0.5f)).build();
             Transform partTransform = new Transform(new Vector3f(-0.5f, 0.5f, -0.5f), new Vector3f(0.0f, 0.0f, 0.0f), new Quaternionf(), new Vector3f(1.0f, 1.0f, 1.0f), new Quaternionf());
@@ -105,7 +105,7 @@ public class SWUtilityDoorProp extends Prop {
         @Override
         public void prepareInternal(ItemDisplay entity, PropSpawnRequest request) {
             entity.setItemStack(Util.getItemWithCustomModelData(Material.PINK_SHULKER_BOX, 77));
-            entity.setRotation(0, 0);
+//            entity.setRotation(0, 0);
             AdvancedLocation location = request.location();
             Transform propTransform = new Transform.Builder(location).pivot(new Vector3f(-0.5f, 1.0f, -0.5f)).build();
             Transform partTransform = new Transform(new Vector3f(-0.5f, 0.5f, -0.5f), new Vector3f(0.0f, 0.0f, 0.0f), new Quaternionf(), new Vector3f(1.0f, 1.0f, 1.0f), new Quaternionf());
@@ -127,7 +127,7 @@ public class SWUtilityDoorProp extends Prop {
 
         private IPropAnimationFrame<SWUtilityDoorProp> createFrame(int frameIndex) {
             return IPropAnimationFrame.create(prop -> {
-                PropPart<SWUtilityDoorProp, ItemDisplay> doorPart = prop.getPart(1);
+                PropPart<SWUtilityDoorProp, ItemDisplay> doorPart = prop.getPart("door.main");
                 if (doorPart == null) return;
                 AdvancedLocation location = prop.getLocation();
                 float yOffset = frameIndex == 0 ? 0 : 2.75f;

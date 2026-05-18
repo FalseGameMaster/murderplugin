@@ -1,7 +1,8 @@
 package dev.falsegamemaster.murderplugin;
 
 import dev.falsegamemaster.murderplugin.prop.doors.SWUtilityDoorProp;
-import dev.falsegamemaster.murderplugin.prop.statics.PlayerCorpseProp;
+import dev.falsegamemaster.murderplugin.prop.npcs.TestNPCProp;
+import dev.falsegamemaster.murderplugin.prop.statics.PlayerBodyProp;
 import dev.falsegamemaster.propengine.PropEnginePlugin;
 import dev.falsegamemaster.propengine.prop.Prop;
 import org.bukkit.Bukkit;
@@ -30,8 +31,9 @@ public final class MurderPlugin extends JavaPlugin {
         LOGGER = getLogger();
         PROP_ENGINE = requirePropEngine();
         if (PROP_ENGINE == null) return;
-        Prop.register(PROP_ENGINE.PROP_REGISTRAR, PlayerCorpseProp::new);
-        Prop.register(PROP_ENGINE.PROP_REGISTRAR, SWUtilityDoorProp::new);
+        Prop.register(PROP_ENGINE.propRegistrar, PlayerBodyProp::new);
+        Prop.register(PROP_ENGINE.propRegistrar, SWUtilityDoorProp::new);
+        Prop.register(PROP_ENGINE.propRegistrar, TestNPCProp::new);
     }
 
 }
