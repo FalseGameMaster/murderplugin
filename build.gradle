@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'dev.falsegamemaster'
-version = '0.1.1'
+version = '0.1.2'
 
 repositories {
     mavenCentral()
@@ -30,8 +30,26 @@ tasks {
     }
 }
 
+tasks.register("buildPropEngineShadow", Exec) {
+    workingDir = file("../propengine")
+//    commandLine "./gradlew", "clean", "shadowJar"
+    commandLine org.gradle.internal.os.OperatingSystem.current().isWindows()
+            ? ['cmd', '/c', 'gradlew.bat', 'shadowJar']
+            : ['./gradlew', 'shadowJar']
+}
+
+tasks.register("delayAfterPropEngineBuild") {
+    dependsOn("buildPropEngineShadow")
+
+    doLast {
+        println "Waiting for PropEngine jar filesystem flush..."
+        sleep(3000)
+    }
+}
+
 tasks.register("copyPropEnginePlugin", Copy) {
-    dependsOn(gradle.includedBuild("propengine").task(":jar"))
+//    dependsOn(gradle.includedBuild("propengine").task(":jar"))
+    dependsOn("delayAfterPropEngineBuild")
 
     def propEngineJar = fileTree("../propengine/build/libs") {
         include("*.jar")

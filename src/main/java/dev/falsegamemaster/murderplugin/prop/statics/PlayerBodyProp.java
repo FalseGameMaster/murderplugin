@@ -3,7 +3,6 @@ package dev.falsegamemaster.murderplugin.prop.statics;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.google.gson.JsonObject;
 import dev.falsegamemaster.propengine.prop.Prop;
-import dev.falsegamemaster.propengine.prop.PropSpawnRequest;
 import dev.falsegamemaster.propengine.prop.PropType;
 import dev.falsegamemaster.propengine.prop.part.EntityPropPart;
 import dev.falsegamemaster.propengine.registration.IPropFactory;
@@ -31,7 +30,7 @@ public class PlayerBodyProp extends Prop {
         return data == null || !data.has("scale") || !data.get("scale").isJsonPrimitive() ? 1.0f : Math.max(0.01f, data.get("scale").getAsFloat());
     }
 
-    private static Transform createPropTransform(PropSpawnRequest request) {
+    private static Transform createPropTransform(SpawnRequest request) {
         AdvancedLocation location = request.location();
         float scale = getScale(request.data());
         return new Transform.Builder(location).translation(new Vector3f(0.0f, 1.0f, 0.0f)).scale(new Vector3f(scale, scale, scale)).build(); // never forget... IT WAS 1
@@ -73,7 +72,7 @@ public class PlayerBodyProp extends Prop {
     }
 
     @Override
-    public List<IPropPartFactory<?>> getPartFactories(PropSpawnRequest request) {
+    public List<IPropPartFactory<?>> getPartFactories(SpawnRequest request) {
         List<IPropPartFactory<?>> factories = new ArrayList<>();
         factories.add(BodyPart::new);
         JsonObject data = request.data();
@@ -123,8 +122,7 @@ public class PlayerBodyProp extends Prop {
         }
 
         @Override
-        public void prepareInternal(ItemDisplay entity, PropSpawnRequest request) {
-            entity.addScoreboardTag("target");
+        public void prepareInternal(ItemDisplay entity, SpawnRequest request) {
             entity.setItemStack(createBody(request.data()));
             Transform partTransform = new Transform(new Vector3f(0.0f, -0.5f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Quaternionf(), new Vector3f(1.0f, 1.0f, 1.0f), new Quaternionf());
             entity.setTransformation(createPropTransform(request).compose(partTransform).bake());
@@ -164,7 +162,7 @@ public class PlayerBodyProp extends Prop {
         }
 
         @Override
-        public void prepareInternal(ItemDisplay entity, PropSpawnRequest request) {
+        public void prepareInternal(ItemDisplay entity, SpawnRequest request) {
             entity.addScoreboardTag("target");
             entity.setItemStack(createPlayerHead(request.data()));
             Vector3f pivot = new Vector3f(0.0f, -0.875f, 0.5f);
@@ -207,7 +205,7 @@ public class PlayerBodyProp extends Prop {
         }
 
         @Override
-        public void prepareInternal(ItemDisplay entity, PropSpawnRequest request) {
+        public void prepareInternal(ItemDisplay entity, SpawnRequest request) {
             entity.addScoreboardTag("target");
             entity.setItemStack(createHat(request.data()));
             Vector3f pivot = new Vector3f(0.0f, -0.875f, 0.5f);

@@ -2,7 +2,6 @@ package dev.falsegamemaster.murderplugin.prop.npcs;
 
 import dev.falsegamemaster.propengine.PropEnginePlugin;
 import dev.falsegamemaster.propengine.prop.Prop;
-import dev.falsegamemaster.propengine.prop.PropSpawnRequest;
 import dev.falsegamemaster.propengine.prop.PropType;
 import dev.falsegamemaster.propengine.prop.ai.PropAI;
 import dev.falsegamemaster.propengine.prop.part.EntityPropPart;
@@ -44,18 +43,18 @@ public class TestNPCProp extends Prop {
     }
 
     @Override
-    public List<IPropPartFactory<?>> getPartFactories(PropSpawnRequest request) {
+    public List<IPropPartFactory<?>> getPartFactories(SpawnRequest request) {
         return List.of(BasePart::new);
     }
 
     @Override
-    public void spawn(PropSpawnRequest request) {
-        super.spawn(request);
+    public void load() {
+        super.load();
         PropAI.PathGraph graph = new PropAI.PathGraph("test_graph", Color.ORANGE);
-        graph.addNode(new PropAI.PathNode("node0", request.location().clone(), new HashSet<>()));
-        graph.addNode(new PropAI.PathNode("node1", request.location().clone().add(6, 0, 0), new HashSet<>()));
-        graph.addNode(new PropAI.PathNode("node2", request.location().clone().add(6, 0, 6), new HashSet<>()));
-        graph.addNode(new PropAI.PathNode("node3", request.location().clone().add(0, 0, 6), new HashSet<>()));
+        graph.addNode(new PropAI.PathNode("node0", spawnRequest.location().clone(), new HashSet<>()));
+        graph.addNode(new PropAI.PathNode("node1", spawnRequest.location().clone().add(6, 0, 0), new HashSet<>()));
+        graph.addNode(new PropAI.PathNode("node2", spawnRequest.location().clone().add(6, 0, 6), new HashSet<>()));
+        graph.addNode(new PropAI.PathNode("node3", spawnRequest.location().clone().add(0, 0, 6), new HashSet<>()));
         graph.addEdge("node0", "node1", 6);
         graph.addEdge("node1", "node2", 6);
         graph.addEdge("node2", "node3", 6);
@@ -94,7 +93,7 @@ public class TestNPCProp extends Prop {
         }
 
         @Override
-        public void prepareInternal(ArmorStand entity, PropSpawnRequest request) {
+        public void prepareInternal(ArmorStand entity, SpawnRequest request) {
             entity.teleport(request.location().clone().add(-0.5, -1.0, -0.5));
             entity.setRotation(request.location().getYaw(), request.location().getPitch());
             entity.getEquipment().setHelmet(new ItemStack(Material.PLAYER_HEAD));

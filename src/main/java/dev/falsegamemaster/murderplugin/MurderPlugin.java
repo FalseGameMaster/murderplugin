@@ -14,8 +14,17 @@ import java.util.logging.Logger;
 
 public final class MurderPlugin extends JavaPlugin {
 
+    public static MurderPlugin getInstance() {
+        return INSTANCE;
+    }
+
+    public static PropEnginePlugin getPropEngine() {
+        return PROP_ENGINE;
+    }
+
     public static Logger LOGGER;
-    public static PropEnginePlugin PROP_ENGINE;
+    private static MurderPlugin INSTANCE;
+    private static PropEnginePlugin PROP_ENGINE;
 
     @Nullable
     private PropEnginePlugin requirePropEngine() {
@@ -29,6 +38,7 @@ public final class MurderPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         LOGGER = getLogger();
+        INSTANCE = this;
         PROP_ENGINE = requirePropEngine();
         if (PROP_ENGINE == null) return;
         Prop.register(PROP_ENGINE.propRegistrar, PlayerBodyProp::new);
